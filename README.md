@@ -5,7 +5,7 @@ A simple tool to navigate your repositories
 ## How to install
 1. Clone the latest project to your local
 ```
-git clone https://github.com/DewMaple/workon
+git clone https://github.com/J0hnnyZhang/workon.git
 ```
 
 2. Export workspace, where you want workon to work with. you can skip this step if you want it uses the default 
