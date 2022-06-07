@@ -3,20 +3,24 @@
 if [ -z "${WORKON_HOME}" ]; then
   WORKON_HOME=$(pwd)
 fi
+echo "WORKON_HOME: ${WORKON_HOME}"
 
-echo "WORKON_HOME is ${WORKON_HOME}"
 if [[ -z "${WORKON_WORKSPACE}" ]]; then
   WORKON_WORKSPACE="${HOME}"
 fi
-echo "WORKON_WORKSPACE is ${WORKON_WORKSPACE}"
+echo "WORKON_WORKSPACE: ${WORKON_WORKSPACE}"
 
-PY_WORKON="${WORKON_HOME}/workon/workon.py"
+WORKON_DEPTH=4
+echo "WORKON_DEPTH: ${WORKON_DEPTH}"
+
+WORKON_PY="${WORKON_HOME}/workon/workon.py"
 
 echo "export WORKON_HOME=${WORKON_HOME}
 export WORKON_WORKSPACE=${WORKON_WORKSPACE}
+export WORKON_DEPTH=${WORKON_DEPTH}
 alias workon='. ${WORKON_HOME}/workon.sh'
-alias workadd='python ${PY_WORKON} assemble'
-alias workalias='python ${PY_WORKON} alias'
+alias workadd='python ${WORKON_PY} assemble'
+alias workalias='python ${WORKON_PY} alias'
 " > "./workonrc"
 
 WORKONRC="${WORKON_HOME}/workonrc"

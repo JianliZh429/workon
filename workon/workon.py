@@ -9,9 +9,9 @@ from os.path import expanduser, exists, join
 
 HOME = os.environ.get("HOME", expanduser("~"))
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
-WORKSPACE = os.environ.get("WORKSPACE", join(HOME, "workspace"))
+WORKSPACE = os.environ.get("WORKON_WORKSPACE")
 PROJECTS_JSON = join(CURRENT_DIR, "projects.json")
-DEEPTH = 3
+WORKON_DEPTH = int(os.environ.get("WORKON_DEPTH", 3))
 
 
 def _load_projects():
@@ -32,10 +32,10 @@ def _update_projects(projects_json):
     print("Update projects json success!!!")
 
 
-def assemble(project_name, deepth=DEEPTH):
+def assemble(project_name, depth=WORKON_DEPTH):
     projects = _load_projects()
     found = []
-    for i in range(deepth):
+    for i in range(depth):
         file_path = join(WORKSPACE, f"*/" * i)
         targets = glob.glob(join(WORKSPACE, f"{file_path}", f"{project_name}"))
         if targets:
@@ -101,4 +101,3 @@ if __name__ == "__main__":
         alias(args[2], args[3])
     else:
         print("Only goto, assemble and alias, are supported.")
-
