@@ -92,7 +92,6 @@ if __name__ == "__main__":
 
     if len(args) < 3:
         print("Must call this script with function name and arguments.")
-
     func = args[1]
     if func == "goto":
         goto(args[2])

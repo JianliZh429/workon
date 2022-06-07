@@ -1,54 +1,51 @@
 #!/bin/bash
 
-# mapfile -d $'\0' DIR < <(find $HOME/workspace -type d -name "$1" -print0)
+# mapfile -d $'\0' WORKON_HOME < <(find $HOME/workspace -type d -name "$1" -print0)
 # locate *lms-dev | awk '{ print length, $0 }' | sort -n -s | awk '{ print $2 }'
 # find $HOME/workspace -type d -name $1
-# DIR=()
+# WORKON_HOME=()
 # while IFS=' '  read -r -d $'\0'; do
-#     DIR+=("$REPLY")
+#     WORKON_HOME+=("$REPLY")
 # done < <(find $HOME/workspace -type d -name $1)
 
-# WORKSPACE="$HOME/workspace/"
+function find_proj() {
+  #DIR_STR=$(locate $HOME/workspace/*$1 -l 3 | awk '{ print length, $0 }' | sort -n -s | awk '{ print $2 }')
+  #IFS=' ' read -a WORKON_HOME <<< "$DIR_STR"
+  #echo "$DIR_STR"
 
-DIR="$WORKSPACE/workon"
-echo $DIR
-function  find_proj() {
-	#DIR_STR=$(locate $HOME/workspace/*$1 -l 3 | awk '{ print length, $0 }' | sort -n -s | awk '{ print $2 }')
-	#IFS=' ' read -a DIR <<< "$DIR_STR"
+  # shellcheck disable=SC2145
+  echo -e "\nMatched directories are: \n${WORKON_HOME[@]} \n\nGo to the first as default"
 
-	echo "$DIR_STR"
+  FIRST_DIR="${WORKON_HOME[0]}/"
 
-	echo -e "\nMatched directories are: \n${DIR[@]} \n\nGo to the first as default"
-
-	FIRST_DIR="${DIR[0]}/"
-
-	echo "${FIRST_DIR}"
-	cd "${FIRST_DIR}"
+  echo "${FIRST_DIR}"
+  # shellcheck disable=SC2164
+  cd "${FIRST_DIR}"
 }
 
 function call_python_script() {
-    if [ -z $1 ]
-    then
-        cd $WORKSPACE
-    else
-        SCRIPT="$DIR/workon/workon.py"
-        FIRST_DIR=$(python $SCRIPT goto $1)
+  if [ -z "$1" ]; then
+    # shellcheck disable=SC2164
+    cd "$WORKON_WORKSPACE"
+  else
+    SCRIPT="$WORKON_HOME/workon/workon.py"
+    FIRST_DIR=$(python "$SCRIPT" goto "$1")
 
-        echo -e "GOTO work directory: \n$FIRST_DIR"
-        if [[ -d $FIRST_DIR ]]; then
-            #statements
-            cd $FIRST_DIR
-        else
-            FIRST_DIR=$1
-            echo -e "\n$FIRST_DIR is not a valid work drectory"
-        fi
+    echo -e "GOTO work directory: \n$FIRST_DIR"
+    if [[ -d $FIRST_DIR ]]; then
+      # shellcheck disable=SC2164
+      cd "$FIRST_DIR"
+    else
+      FIRST_DIR=$1
+      echo -e "\n$FIRST_DIR is not a valid work directory"
     fi
-	
+  fi
+
 }
 
-call_python_script $1
+call_python_script "$1"
 
 if [[ -d venv ]]; then
-	#statements
-	source venv/bin/activate
+  #statements
+  source venv/bin/activate
 fi

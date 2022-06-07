@@ -3,34 +3,32 @@ A simple tool to navigate your repositories
 
 
 ## How to install
-1. export workspace, where your codes located
-```shell
- eport WORKSPACE=$"path to code directory"
+1. Clone the latest project to your local
+```
+git clone https://github.com/DewMaple/workon
 ```
 
-2. pull this repo to your workspace directory
+2. Export workspace, where you want workon to work with. you can skip this step if you want it uses the default 
+workspace, which is the home directory of current user.
 ```shell
- cd $WORKSPACE && git clone https://github.com/DewMaple/workon
-```
-3. add the following lines to your bash_profile or zshrc
-   if you want to use another command alias, just replace *workon*, *workadd*, *workalias* to what you like
-```shell
-  alias workon='. $WORKSPACE/workon/workon.sh'
-  alias workadd='python $WORKSPACE/workon/workon/workon.py assemble'
-  alias workalias='python $WORKSPACE/workon/workon/workon.py alias'
+ eport WORKON_WORKSPACE=$"your workspace path"
 ```
 
+3. Setup workon, goto the workon code base root dir and `run setup.sh`
+```shell
+cd ${workon project root directory} && sh setup.sh
+```
 ## How to use
 
-- Go to your repository directory
+- Go to your directory
 ```shell
- workon $repo
+ workon $dir
 ```
- if no argument, will goto $WORKSPACE directory
+ if no argument, will goto $WORKON_WORKSPACE directory
  
 - Add a new repository to your command
 ```shell
- workadd $repo
+ workadd $dir
 ```
 
 - Add a shortname to a long name repository
