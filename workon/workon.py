@@ -33,7 +33,7 @@ def _update_projects(projects_json):
     print("Update datastore successfully, new directories added")
 
 
-def assemble(project_name, depth=WORKON_DEPTH):
+def assemble(project_name, depth=WORKON_DEPTH, select_first=False):
     projects = _load_projects()
     found = []
     for i in range(depth):
@@ -48,14 +48,18 @@ def assemble(project_name, depth=WORKON_DEPTH):
         print("Found nothing, please make sure you had typed the right directory name")
         return None
 
+    select_idx = 0
     if len(found) > 1:
+        print("Found multiple same named directories:")
         for i, v in enumerate(found):
             print(f"{i}: {v}")
 
-        choose = input("Please select the right directory:\n")
-        selected = found[int(choose)]
-    else:
-        selected = found[0]
+        if not select_first:
+            choose = input("Please select the right directory:\n")
+            select_idx = int(choose)
+        else:
+            print("Select first as default to go, if it is not what you want, please use workadd command to update")
+    selected = found[select_idx]
 
     projects[project_name] = selected
 
@@ -71,7 +75,7 @@ def goto(project_name):
         project_path = projects[project_name]
     else:
         print("Not existed in datastore, try to search and add")
-        found = assemble(project_name)
+        found = assemble(project_name, select_first=True)
         if found:
             project_path = found
     print(project_path)
