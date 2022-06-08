@@ -12,6 +12,7 @@ CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
 WORKSPACE = os.environ.get("WORKON_WORKSPACE")
 PROJECTS_JSON = join(CURRENT_DIR, "projects.json")
 WORKON_DEPTH = int(os.environ.get("WORKON_DEPTH", 3))
+MAX_SEARCHED = 5
 
 
 def _load_projects():
@@ -39,6 +40,8 @@ def assemble(project_name, depth=WORKON_DEPTH):
         file_path = join(WORKSPACE, f"*/" * i)
         targets = glob.glob(join(WORKSPACE, f"{file_path}", f"{project_name}"))
         if targets:
+            if len(found) > MAX_SEARCHED:
+                break
             found.extend(targets)
 
     if not found:
