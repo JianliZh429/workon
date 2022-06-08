@@ -30,8 +30,13 @@ function call_python_script() {
   else
     SCRIPT="$WORKON_HOME/workon/workon.py"
     FIRST_DIR=$(python "$SCRIPT" goto "$1")
+    if (( $(grep -c . <<<"${FIRST_DIR}") > 1 )); then
+      echo -e "${FIRST_DIR}\n"
+    fi
 
+    FIRST_DIR=$(echo "${FIRST_DIR}" | tail -n 1)
     echo -e "GOTO work directory: \n$FIRST_DIR"
+
     if [[ -d $FIRST_DIR ]]; then
       # shellcheck disable=SC2164
       cd "$FIRST_DIR"

@@ -29,7 +29,7 @@ def _load_projects():
 def _update_projects(projects_json):
     with open(PROJECTS_JSON, "w") as f:
         json.dump(projects_json, f)
-    print("Update projects json success!!!")
+    print("Update datastore successfully, new directories added")
 
 
 def assemble(project_name, depth=WORKON_DEPTH):
@@ -42,14 +42,14 @@ def assemble(project_name, depth=WORKON_DEPTH):
             found.extend(targets)
 
     if not found:
-        print("Found nothing, please make sure you had typed the right project name.")
+        print("Found nothing, please make sure you had typed the right directory name")
         return None
 
     if len(found) > 1:
         for i, v in enumerate(found):
             print(f"{i}: {v}")
 
-        choose = input("Please select the right project:\n")
+        choose = input("Please select the right directory:\n")
         selected = found[int(choose)]
     else:
         selected = found[0]
@@ -67,6 +67,7 @@ def goto(project_name):
     if project_name in projects:
         project_path = projects[project_name]
     else:
+        print("Not existed in datastore, try to search and add")
         found = assemble(project_name)
         if found:
             project_path = found
