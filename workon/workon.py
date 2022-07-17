@@ -37,8 +37,8 @@ def assemble(project_name, depth=WORKON_DEPTH, select_first=False):
     projects = _load_projects()
     found = []
     for i in range(depth):
-        file_path = join(WORKSPACE, f"*/" * i)
-        targets = glob.glob(join(WORKSPACE, f"{file_path}", f"{project_name}"))
+        file_path = join(WORKSPACE, "*/" * i)
+        targets = glob.glob(join(WORKSPACE, "{}".format("file_path"), "{}".format(project_name)))
         if targets:
             if len(found) > MAX_SEARCHED:
                 break
@@ -52,7 +52,7 @@ def assemble(project_name, depth=WORKON_DEPTH, select_first=False):
     if len(found) > 1:
         print("Found multiple same named directories:")
         for i, v in enumerate(found):
-            print(f"{i}: {v}")
+            print("{}: {}".format(i, v))
 
         if not select_first:
             choose = input("Please select the right directory:\n")
