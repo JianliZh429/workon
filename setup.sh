@@ -18,9 +18,9 @@ WORKON_PY="${WORKON_HOME}/workon/workon.py"
 echo "export WORKON_HOME=${WORKON_HOME}
 export WORKON_WORKSPACE=${WORKON_WORKSPACE}
 export WORKON_DEPTH=${WORKON_DEPTH}
-alias workon='. ${WORKON_HOME}/workon.sh'
-alias workadd='python ${WORKON_PY} assemble'
-alias workalias='python ${WORKON_PY} alias'
+alias j='. ${WORKON_HOME}/workon.sh'
+alias jadd='python ${WORKON_PY} assemble'
+alias jalias='python ${WORKON_PY} alias'
 " > "./workonrc"
 
 WORKONRC="${WORKON_HOME}/workonrc"
