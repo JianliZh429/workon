@@ -38,7 +38,7 @@ def assemble(project_name, depth=WORKON_DEPTH, select_first=False):
     found = []
     for i in range(depth):
         file_path = join(WORKSPACE, "*/" * i)
-        targets = glob.glob(join(WORKSPACE, "{}".format("file_path"), "{}".format(project_name)))
+        targets = glob.glob(join(WORKSPACE, "{}".format(file_path), "{}".format(project_name)))
         if targets:
             if len(found) > MAX_SEARCHED:
                 break
